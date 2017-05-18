@@ -33,6 +33,7 @@ The IP address of the container is directly accessible from the local host.
 ❯ CONTAINER_ID="$(docker run -d demo/debian-ssh)" # eg. df626f91b277
 ❯ CONTAINER_IPADDR="$(docker container inspect \
     --format '{{ .NetworkSettings.IPAddress }}' "$CONTAINER_ID")" # eg. 172.17.0.2
+
 ❯ ssh ansible@"$CONTAINER_IPADDR"
 ```
 
@@ -46,7 +47,7 @@ container to some port on the local host.
 ❯ CONTAINER_PORT="$(docker container inspect \
     --format '{{ index .NetworkSettings.Ports "22/tcp" 0 "HostPort" }}' "$CONTAINER_ID")" # eg. 32770
 
-❯ ssh ansible@localhost -p"$CONTAINER_IPADDR"
+❯ ssh ansible@localhost -p"$CONTAINER_PORT"
 ```
 
 ### Integration with an Ansible inventory
