@@ -1,4 +1,4 @@
-FROM debian
+FROM debian:8
 
 ENTRYPOINT ["/init"]
 
@@ -38,7 +38,7 @@ COPY services.d/ /etc/services.d/
 # add test user
 ARG USER_SSH_PUBKEY
 RUN \
-	adduser ansible --disabled-password --gecos aco \
+	adduser ansible --disabled-password --gecos Ansible \
 	&& ( \
 		umask 077 \
 		&& mkdir ~ansible/.ssh \
@@ -48,6 +48,6 @@ RUN \
 	&& chown -R ansible:ansible ~ansible/.ssh \
 	&& ( \
 		umask 227 \
-		&& /bin/echo -e "ansible\tALL=(ALL:ALL) NOPASSWD: ALL" \
+		&& echo -e "ansible\tALL=(ALL:ALL) NOPASSWD: ALL" \
 			> /etc/sudoers.d/ansible \
 	)
