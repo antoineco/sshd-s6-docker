@@ -1,5 +1,7 @@
 # Disposable Ansible playground
 
+[![build-widget]][build-result]
+
 Neutral Debian-based Docker image running an OpenSSH server with [s6](https://github.com/skarnet/s6). Designed for
 executing Ansible playbooks in reproducible environments using SSH and [non-SSH][nonssh] connection types.
 
@@ -7,6 +9,8 @@ Containers are ideal for running Ansible integration tests because they allow th
 locally without any resource overhead.
 
 [nonssh]: http://docs.ansible.com/ansible/intro_inventory.html#non-ssh-connection-types
+[build-widget]: https://travis-ci.org/antoineco/sshd-s6-docker.svg?branch=master
+[build-result]: https://travis-ci.org/antoineco/sshd-s6-docker
 
 ## Building the image
 
