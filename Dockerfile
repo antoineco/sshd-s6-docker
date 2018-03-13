@@ -1,8 +1,8 @@
-FROM debian:8
+FROM debian:9
 
 ENTRYPOINT ["/init"]
 
-ENV S6_OVERLAY_VERSION 1.19.1.1
+ENV S6_OVERLAY_VERSION 1.21.4.0
 
 # install required packages
 RUN runDeps=" \
@@ -25,12 +25,16 @@ RUN set -x \
 	&& curl -sSLo s6.sig \
 		https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-amd64.tar.gz.sig \
 	# gpg verification
+	&& apt-get update \
+	&& apt-get install -y --no-install-recommends gnupg \
+	&& rm -r /var/lib/apt/lists/* \
 	&& export GNUPGHOME="$(mktemp -d)" \
 	&& curl -sSL https://keybase.io/justcontainers/key.asc | gpg --import \
 	&& gpg --batch --verify s6.sig s6.tgz \
 	# extract s6-overlay archive
 	&& tar -xzf s6.tgz -C / \
 	# cleanup
+	&& apt-get purge -y --auto-remove gnupg \
 	&& rm -r "$GNUPGHOME" s6.sig s6.tgz
 
 COPY services.d/ /etc/services.d/
